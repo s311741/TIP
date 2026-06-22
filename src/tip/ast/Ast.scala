@@ -114,9 +114,11 @@ case class ADerefWrite(exp: AExpr, loc: Loc) extends ReferenceAssignable
 
 sealed trait FieldAssignable extends Assignable
 
-case class ADirectFieldWrite(id: AIdentifier, field: String, loc: Loc) extends FieldAssignable
+trait FieldWrite { def field(): String }
 
-case class AIndirectFieldWrite(exp: AExpr, field: String, loc: Loc) extends FieldAssignable
+case class ADirectFieldWrite(id: AIdentifier, field: String, loc: Loc) extends FieldAssignable with FieldWrite
+
+case class AIndirectFieldWrite(exp: AExpr, field: String, loc: Loc) extends FieldAssignable with FieldWrite
 
 sealed trait ABlock extends AStmt {
 
